@@ -1,0 +1,21 @@
+$img-thumbnail{
+ 	width: 200px; /* You can set the dimensions to whatever you want */
+    height: 200px;
+	object-fit: cover;
+}
+.link-unstyled, .link-unstyled:link, .link-unstyled:hover {
+  color: inherit;
+  text-decoration: inherit;
+}
+.bg { 
+  /* The image used */
+  background-image: url("https://mdbootstrap.com/img/Photos/Horizontal/Nature/full page/img(20).jpg");
+
+  /* Full height */
+  height: 100%; 
+
+  /* Center and scale the image nicely */
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
