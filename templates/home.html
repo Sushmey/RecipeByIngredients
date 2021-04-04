@@ -1,0 +1,125 @@
+{%extends 'layout.html' %}
+{% block content %}
+	{% if title %}
+    <title> Recipe - {{title}} </title>
+    {% else %}
+      <title> Recipes </title>  
+    {% endif %}
+	
+	<!-- Inputting part starts here -->
+	<div class="container py-2">
+		<form method="POST" action="">
+			{{form.hidden_tag()}} <!-- Adds a CSRF token to protect from attacks -->
+			<fieldset class="py-2">
+				<div class="row">
+					<div class="col">
+						<div class="form-floating mb-3">
+							{% if form.ingredients.errors %}
+							{{ form.ingredients(class="form-control form-control-lg is-invalid")}}
+							<div class="invalid-feedback">
+								{% for error in form.ingredients.errors%}
+								<span>{{error}}</span>
+								{% endfor %}
+							</div>
+							{% else %}
+								{{ form.ingredients(class="form-control form-control-lg", placeholder="Add the ingredients separated by a comma")}}
+							{% endif %}
+							{{ form.ingredients.label}}
+							<small class="help-block py-1">
+								Add the ingredients separated by a comma
+							</small>
+						</div>
+					</div>
+					<div class="col">
+						<div class="form-floating">
+							{% if form.ingredients.errors %}
+							{{ form.intolerances(class="form-control form-control-lg is-invalid")}}
+							<div class="invalid-feedback">
+								{% for error in form.intolerances.errors%}
+								<span>{{error}}</span>
+								{% endfor %}
+							</div>
+							{% else %}
+								{{ form.intolerances(class="form-select", placeholder="Allergies")}}
+							{% endif %}
+							{{ form.intolerances.label}}
+						</div>	
+					</div>
+				</div>
+				<div class=row>
+					<div class="col">
+						<div class="form-check form-switch">
+							{{form.vegetarian(class="form-check-input", value="vegetarian")}}
+							{{form.vegetarian.label(class="form-check-label")}}
+						</div>
+					</div>
+					<div class="col">
+
+					</div>
+				</div>
+			</fieldset>
+			<div class="d-flex flex-row">
+				<div class="form-group">
+					{{form.submit(class="btn btn-warning")}}
+				</div>
+			</div>
+		</form>
+	</div>
+{% endblock content%}
+{% block recipes %}
+	{% if statusCode==200 and jsonResponse!= None %}
+		<div class="row justify-content-center">
+			{% for response,link,time in jsonResponse_recipeLinks_timeToCook %}
+				<div class="col-lg-4 p-4">
+					<a href="{{link}}" target="_blank" rel="noopener noreferrer" class="text-dark text-decoration-none">
+						<div class="card box-shadow">
+							<img src="{{response['image']}}" class="card-img-top" alt="{{response['title']}}">
+							<div class ="d-flex align-items-baseline mb-3" style="height: 100px">
+								<div class="card-body">
+										<p class="card-text fw-bold">
+											{{response['title']}}
+										</p>		
+									<div class="d-flex justify-content-between align-items-center">
+										<div>
+										
+										</div>
+										<small class="lead">
+											{{time}} Minutes
+										</small>
+									</div>	
+								</div>
+							</div>
+						</div>	
+					</a>
+				</div>
+			{% endfor %}		
+		</div>
+	{% elif statusCode==402 %}
+		<div>
+			<p class="display-1 text-center">
+				API has reached its daily quota 
+				<p class="lead text-center">
+					Please try again tomorrow 
+				</p>
+			</p>
+		</div>
+		<div class="d-flex justify-content-center">
+			<img src="{{url_for('static',filename='sad.png')}}" class="align-center">
+		</div>
+	{% else %}
+		<div>
+			<p class="display-1 text-center">
+				No results found 
+			</p>
+			<p class="lead text-center">
+				Please make sure the ingredients are in english.
+				<br>
+				Check your spellings or reduce the number of ingredients
+			</p>
+		</div>
+		<div class="d-flex justify-content-center">
+			<img src="{{url_for('static',filename='sad.png')}}" class="align-center">	
+		</div>		
+	{% endif %}
+{% endblock recipes %}
+
