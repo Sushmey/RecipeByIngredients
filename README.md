@@ -1,7 +1,7 @@
 # Recipe By Ingredients
 Website that helps you find recipes based on the ingredients that you have at your home.
 <br>
-Made with the help of [spoonacularAPI](https://spoonacular.com/food-api) and Bootstrap.
+Made with the help of [spoonacularAPI](https://spoonacular.com/food-api) and Bootstrap Twitter
 <br>
 [Check out the website!](https://recipebyingredients.herokuapp.com)
 <br>
@@ -11,5 +11,3 @@ Made with the help of [spoonacularAPI](https://spoonacular.com/food-api) and Boo
 # Results page
 ![Website results screenshot](https://github.com/sushmey/recipebyingredients/blob/main/Images/WebsiteSSSearch.png?raw=true)
 <br>
-
-
