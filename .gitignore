@@ -1,2 +1,5 @@
 #Python files
 /bin
+
+#Packages
+lib/python3.9/site-packages
